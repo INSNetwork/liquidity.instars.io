@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useCallback }  from 'react'
 import { useViewport } from 'use-viewport'
 import styled from 'styled-components'
-import backgroundImg from './assets/default-background.jpg'
 import instarLogo from 'components/Logo/logo-instars.svg'
-import DropdownComponent from 'components/DropdownComponent/DropdownComponent'
 import SocialLinks from 'components/SocialLinks/SocialLinks'
 import './style.css'
 
@@ -14,17 +12,6 @@ function Header({ socials }) {
   const [isGtNormalDesktop, setIsGtNormalDesktop] = useState(false)
   const smallLayout = below(920)
   const normalDesktopLayout = !below(1352)
-
-  const signUpVariants = [
-    {
-      title: 'Developer Beta',
-      url: '/sign-up-for-closed-beta',
-    },
-    {
-      title: 'Player Beta',
-      url: '/sign-up-as-a-player',
-    },
-  ]
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,29 +37,14 @@ function Header({ socials }) {
 
   return (
     <div>
-      <div className="page-header">
+      <div className="page-header" css={` background: #FFFFFF; `}>
         <PageBackdrop />
         <div className="container">
-          {!socialsInNav && !isSmallLayout && (
-            <SocialLinks
-              socialTypes={socials}
-              socialDropdownPlacement="bottom-end"
-              socialDropdownPopoverStyles={`
-                top: 3px !important;
-              `}
-              socialLinksWrapperStyles={`
-                 min-width: max-content;
-                 @media (max-width: 920px) {
-                  display: none;
-                 }
-              `}
-            />
-          )}
           <nav css={`
-            ${socialsInNav &&
-              `
+            ${`
                 @media (min-width: 1352px) {
-                  padding-top: 70px;
+                  padding-top: 10px;
+                  padding-bottom: 10px;
                 }
               `}
            `}
@@ -100,10 +72,22 @@ function Header({ socials }) {
                         @media (max-width: 920px) {
                           margin: 1.4rem 1rem;
                         }
+                        &:hover {
+                          text-decoration: none;
+                        }
                      `}
                   >
                     <img src={instarLogo} alt="Instar Logotype Icon" width={32} css={`height: 2rem;`} />
-                    <span>INSTARS</span>
+                    <span css= {`
+                      color: #303864;
+                      margin-left: .5rem;
+                      letter-spacing: 4px;
+                      white-space: normal;
+                      word-break: break-all;
+                      font-size: 1.125rem;
+                      font-weight: 700;
+                      letter-spacing: .04rem;
+                    `}>instars.com</span>
                   </a>
                 </section>
                 {socialsInNav && (
@@ -150,12 +134,14 @@ function Header({ socials }) {
             >
               <h1 css={`
                     font-weight: bold;
+                    color: #FFFFFF;
+                    text-align: center;
                     @media (min-width: 640px) {
                       min-height: 7.5rem;
                     }
                  `}
               >
-                Uniswap Staking Program
+                Liquidity Rewards Program
               </h1>
             </div>
           </div>
@@ -166,26 +152,10 @@ function Header({ socials }) {
 }
 
 const PageBackdrop = styled.div`
-  background:  url(${backgroundImg}) center 0 no-repeat #28262C;
   background-size: cover;
   position: absolute;
   z-index: 0;
   height: 980px;
-
-  &:after {
-    display: block;
-    content: '';
-    height: 100%;
-    background: 
-      linear-gradient(359.66deg, #28262C 0%, rgba(40, 38, 44, 0) 100%), 
-      radial-gradient(100% 145.81% at 100% 0%, rgba(49, 45, 54, 0.1) 0%, #312D36 100%), 
-      linear-gradient(60.3deg, #312D36 0%, rgba(49, 45, 54, 0.39) 100%);
-  }
-
-  &,
-  &:after {
-    width: 100%;
-  }
 `
 
 const ButtonBase = styled.a`
@@ -210,7 +180,7 @@ const ButtonBase = styled.a`
     color: #FFFFFF;
     text-decoration: none;
     outline: none;
-    background: #946aed;
+    background: #19a388;
     box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
   }   
   

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const MODES = new Map([
-  ['info', { background: '', color: 'rgba(255, 255, 255, 0.7)' }],
+  ['info', { background: '', color: 'rgba(0, 0, 0, 1)' }],
   ['warning', { background: 'rgba(179, 173, 255, 0.1)', color: '#7bcab5'}],
   ['success', { background: 'rgba(144, 242, 154, 0.1)', color: '#8CE895'}],
 ])

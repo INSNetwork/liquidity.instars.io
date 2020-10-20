@@ -197,10 +197,10 @@ export default function StakeModule() {
           justify-content: flex-start;
           width: 100%;
           height: 100%;
-          background: #312D36;
+          background: #FFFFFF;
           mix-blend-mode: normal;
           padding: 0 20px 20px;
-          border: 1px solid #3C3846;
+          border: 1px solid #4c5585;
           box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25), 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12);
           border-radius: 8px;
           ${isCompact &&
@@ -215,7 +215,7 @@ export default function StakeModule() {
         <div css={`
             position: relative;
             margin: 0 -20px;
-            background: #3C3846;
+            background: #ffffff;
             border-bottom: 1px solid #55525F;
         `}>
           <div css={`
@@ -261,7 +261,7 @@ export default function StakeModule() {
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href="https://medium.com/@mangicrypto/uniswap-liquidity-reward-776160a6afaf"
+                href="https://blog.instars.com/instar-uniswap-pool-live/"
                 css={`
                     &,
                     &:hover {
@@ -325,7 +325,7 @@ export default function StakeModule() {
               `)}
                ${disabled || inputError || !connected ? '': `
                  &:hover {
-                    background: #AD8EF2;
+                    background: #19a388;
                   }
                `}
             `}
@@ -376,7 +376,7 @@ export default function StakeModule() {
               `)}
                 ${disabled || !connected ? '': `
                  &:hover {
-                    background: #AD8EF2;
+                    background: #19a388;
                   }
                `}
             `}
@@ -650,7 +650,7 @@ function ClaimSectionLiquidityPool({ isCompact }) {
 const Card = styled.div`
   width: 100%;
   height: 104px;
-  background: #3C3846;
+  background: #4c5585;
   border-radius: 4px;
   padding: 20px 24px;
   @media (max-width: 640px) {

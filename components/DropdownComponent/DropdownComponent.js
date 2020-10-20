@@ -71,7 +71,7 @@ function DropdownComponent({ dropdownPlacement, dropdownPopoverStyles, options, 
 
 const StyledPopover = styled(Popover)`
   position: absolute;
-  background: #3C3846;
+  background: #4c5585;
   border-radius: 4px;
   box-shadow: 0 9px 46px rgba(#000000, 0.12), 0 24px 38px rgba(#000000, 0.14), 0 20px 80px rgba(#000000, 0.25);
   font-size: 12px;

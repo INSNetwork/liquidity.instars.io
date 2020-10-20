@@ -37,7 +37,7 @@ export default function StatsRow({ balanceUni, decimalsUni, isCompact, isStake }
             line-height: 16px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(0, 0, 0, 1);
           `}
         >
           {isStake ? 'Amount of UNI-V2 to Stake:' : ''}
@@ -45,7 +45,7 @@ export default function StatsRow({ balanceUni, decimalsUni, isCompact, isStake }
       </div>
       <div
         css={`
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(0, 0, 0, 1);
           font-size: 12px;
           line-height: 20px;
           ${isCompact &&

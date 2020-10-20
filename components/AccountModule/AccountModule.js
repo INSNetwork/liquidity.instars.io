@@ -142,7 +142,7 @@ function ProviderButton({ name, onActivate, image }) {
         position: relative;
         display: flex;
         flex-direction: column;
-        background: #3C3846;
+        background: #4c5585;
         color: rgba(255, 255, 255, 0.5);
         align-items: center;
         justify-content: center;
@@ -155,7 +155,7 @@ function ProviderButton({ name, onActivate, image }) {
         }
         &:active,
         &:hover {
-          background: #AD8EF2;
+          background: #19a388;
           color: #ffffff;
         }
         &:active,

@@ -70,7 +70,7 @@ function Button({
 const ButtonBase = styled.button`
   position: relative;
   background: transparent;
-  color: #ffffff;
+  color: #000000;
   opacity: 0.7;
   font-weight: bold;
   box-shadow: none;
