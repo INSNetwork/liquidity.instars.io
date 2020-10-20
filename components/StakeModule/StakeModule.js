@@ -155,7 +155,7 @@ export default function StakeModule() {
 
       if (SECTIONS[activeKey].id === 'claim') {
         await claim()
-        setNotification(`${TokenAmount.format(paid, 4, { symbol: 'UOS', digits: 17 })} have been claimed.`)
+        setNotification(`${TokenAmount.format(paid, 4, { symbol: 'INSTAR', digits: 17 })} have been claimed.`)
       }
     } catch (err) {
       if (env('NODE_ENV') !== 'production') {
@@ -536,7 +536,7 @@ function ClaimSectionReward() {
           margin-top: 40px;
         `}
       >
-        <Logo mode="uos" opacity={1} />
+        <Logo mode="instar" opacity={1} />
         <div
           css={`
             display: flex;
@@ -576,7 +576,7 @@ function ClaimSectionReward() {
             >
               {loading
                 ? 'loading...'
-                : TokenAmount.format(account && paid || 0, 4, { symbol: 'UOS', digits: 17 })}
+                : TokenAmount.format(account && paid || 0, 4, { symbol: 'INSTAR', digits: 17 })}
             </span>
           </span>
         </div>
@@ -586,7 +586,7 @@ function ClaimSectionReward() {
 }
 
 function ClaimSectionLiquidityPool({ isCompact }) {
-  const [loadingUniswapInfo, uniswapInfo] = useTokenUniswapInfo('UOS')
+  const [loadingUniswapInfo, uniswapInfo] = useTokenUniswapInfo('INSTAR')
 
   return (
     <div>
@@ -602,7 +602,7 @@ function ClaimSectionLiquidityPool({ isCompact }) {
           margin-top: 20px;
         `}
       >
-        <Logo mode="uos" />
+        <Logo mode="instar" />
         <div
           css={`
             display: flex;
@@ -621,7 +621,7 @@ function ClaimSectionLiquidityPool({ isCompact }) {
               }
             `}
           >
-            {isCompact ? 'Total $ USD liquidity' : 'Total $ USD liquidity in the UOS/ETH Uniswap liquidity pool'}
+            {isCompact ? 'Total $ USD liquidity' : 'Total $ USD liquidity in the INSTAR/ETH Uniswap liquidity pool'}
           </span>
           <span
             css={`

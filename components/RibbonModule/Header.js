@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback }  from 'react'
 import { useViewport } from 'use-viewport'
 import styled from 'styled-components'
-import ultraBrandTextSvg from './assets/ultra-brand-text.svg'
-import ultraWhiteLogoSvg from './assets/ultra-white-logo.svg'
 import backgroundImg from './assets/default-background.jpg'
+import instarLogo from 'components/Logo/logo-instars.svg'
 import DropdownComponent from 'components/DropdownComponent/DropdownComponent'
 import SocialLinks from 'components/SocialLinks/SocialLinks'
 import './style.css'
@@ -46,7 +45,7 @@ function Header({ socials }) {
   }, [isGtNormalDesktop, socials])
 
   const handleSignUpClick = useCallback(data => {
-    window.open(`${process.env.WEBSITE_FRONTEND_URL}${data.url}`, "_self")
+    location.replace(`https://instars.com`, "_self")
   }, [])
 
   return (
@@ -90,7 +89,7 @@ function Header({ socials }) {
                   css={`align-self: center;`}
                 >
                   <a href={`${process.env.WEBSITE_FRONTEND_URL}`}
-                     aria-label="Ultra Logotype"
+                     aria-label="Instars Logotype"
                      css={`
                         display: flex;
                         flex-direction: row;
@@ -103,11 +102,10 @@ function Header({ socials }) {
                         }
                      `}
                   >
-                    <img src={ultraWhiteLogoSvg} alt="Ultra Logotype Icon" width={32} css={`height: 2rem;`} />
-                    <img src={ultraBrandTextSvg} alt="Ultra Brand Text" width={96} css={`margin-left: 1rem;`} />
+                    <img src={instarLogo} alt="Instar Logotype Icon" width={32} css={`height: 2rem;`} />
+                    <span>INSTARS</span>
                   </a>
                 </section>
-                <NavigationMenu />
                 {socialsInNav && (
                   <SocialLinks
                     socialTypes={socials}
@@ -128,16 +126,8 @@ function Header({ socials }) {
                     `}
                   />
                 )}
-                <ButtonBase>
-                  Sign Up
-                  <DropdownComponent
-                    options={signUpVariants}
-                    dropdownPlacement="bottom-end"
-                    dropdownPopoverStyles={`
-                       top: 3px !important;
-                    `}
-                    onOptionClick={handleSignUpClick}
-                  />
+                <ButtonBase href="https://instars.com" onOptionClick={handleSignUpClick}>
+                  Return to App
                 </ButtonBase>
               </div>
             </div>
@@ -175,98 +165,6 @@ function Header({ socials }) {
   )
 }
 
-function NavigationMenu({}) {
-  const navigationLinks = [
-    { path: '/', title: 'Home' },
-    { path: '/developers', title: 'Developers' },
-    { path: '/technology', title: 'Technology' },
-    { path: '/articles', title: 'Articles' },
-    { path: '/company', title: 'Company' },
-    { path: '/career', title: 'Join Us' },
-    { path: '', title: ' Staking Program', isActive: true },
-  ];
-
-  return (
-    <NavigationList>
-      {navigationLinks.map((link, index) => {
-        return <NavigationLink
-          className={link.isActive ? 'active-link': ''}
-          key={index}
-          href={link.path ? `${process.env.WEBSITE_FRONTEND_URL}${link.path}` : ''}
-        >
-          {link.title}
-        </NavigationLink>
-      })}
-    </NavigationList>
-  )
-}
-
-const NavigationList = styled.nav`
-  display: flex;
-  flex: 1 2;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  
-  @media (max-width: 920px) {
-    display: none;
-  }
-`
-
-const NavigationLink = styled.a`
-  &,
-  &:hover {
-    color: #ffffff;
-    font-size: 12px;
-    padding: 22px 20px;
-    font-weight: bold;
-    white-space: nowrap;
-    text-decoration: none;
-    transition: 0.2s ease-in-out;
-    opacity: 0.7;
-    cursor: pointer;
-  }
-
-  &.active-link {
-    position: relative;
-    opacity: 1;
-
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 2px;
-      display: block;
-      background: #a481f0;
-    }
-  }
-
-  &:last-child {
-    margin-right: 1rem;
-  }
-
-  @media (max-width: 920px) {
-    display: flex;
-    align-items: center;
-    min-height: 3.375rem;
-    margin: 0 0.6rem;
-    opacity: 1;
-    font-weight: normal;
-    &.active-link {
-      font-weight: bold;
-      &:after {
-        background: #c5abff;
-      }
-     }
-  }
-  
-  @media (min-width: 920px) and (max-width: 1080px) {
-    padding: 20px 10px;
-  }
-`
-
 const PageBackdrop = styled.div`
   background:  url(${backgroundImg}) center 0 no-repeat #28262C;
   background-size: cover;
@@ -290,7 +188,7 @@ const PageBackdrop = styled.div`
   }
 `
 
-const ButtonBase = styled.button`
+const ButtonBase = styled.a`
   position: relative;
   max-width: 11.25rem;
   align-self: center;
@@ -307,9 +205,10 @@ const ButtonBase = styled.button`
   line-height: 1rem;
   padding: 0.5rem 1rem;
   max-height: 32px;
-  
   &:focus,
   &:hover {
+    color: #FFFFFF;
+    text-decoration: none;
     outline: none;
     background: #946aed;
     box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);

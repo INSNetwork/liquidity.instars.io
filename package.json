@@ -1,9 +1,9 @@
 {
-  "name": "liquidity.ultra.io",
+  "name": "liquidity.instars.com",
   "version": "1.0.0",
   "private": true,
   "main": "src/index.js",
-  "homepage": "https://github.com/ultraio/liquidity.ultra.io",
+  "homepage": "https://github.com/INSNetwork/liquidity.instars.com",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "build": "next build",
@@ -11,7 +11,7 @@
     "build:rinkeby": "CHAIN_ID=4 npm run build",
     "deploy": "NODE_ENV=production npm run build",
     "deploy:mainnet": "CHAIN_ID=1 npm run deploy",
-    "deploy:rinkeby": "CHAIN_ID=4 npm run deploy",    
+    "deploy:rinkeby": "CHAIN_ID=4 npm run deploy",
     "export": "next export -o dist",
     "lint": "eslint ./components ./lib ./pages",
     "serve": "serve dist -p 3000",
@@ -62,21 +62,5 @@
     "lint-staged": "^10.0.9",
     "prettier": "^1.19.1",
     "serve": "^11.1.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "components/**/*.js": [
-      "eslint --fix"
-    ],
-    "lib/**/*.js": [
-      "eslint --fix"
-    ],
-    "pages/**/*.js": [
-      "eslint --fix"
-    ]
   }
 }

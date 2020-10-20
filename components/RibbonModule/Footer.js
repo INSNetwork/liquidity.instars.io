@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import ultraPurpleLogoSvg from './assets/ultra-purple-logo.svg'
+import instarslogo from 'components/Logo/logo-instars.svg'
 import SocialLinks from 'components/SocialLinks/SocialLinks'
 import './style.css'
 
@@ -19,10 +19,10 @@ function Footer({ socials }) {
       <div className="container text-center">
         <div>
           <a href={`${process.env.WEBSITE_FRONTEND_URL}`}
-             aria-label="Ultra Logotype"
+             aria-label="Instars Logotype"
           >
-            <img src={ultraPurpleLogoSvg}
-                 alt="Ultra Logotype Icon"
+            <img src={instarslogo}
+                 alt="Instars Logotype Icon"
                  width={45}
                  css={`
                     @media (min-width: 640px) {

@@ -1,1 +1,1 @@
-# Ultra UOS Liquidity Rewards frontend
+# INSTAR Liquidity Rewards frontend

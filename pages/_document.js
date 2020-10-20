@@ -44,7 +44,7 @@ export default class Document extends NextDocument {
           />
 
           <meta name="twitter:card" content="summary" />
-          <meta name="twitter:site" content="Ultra.io" />
+          <meta name="twitter:site" content="instars.com" />
           <meta name="twitter:description" content={env('SITE_DESCRIPTION')} />
           <meta name="twitter:title" content={env('SITE_TITLE')} />
           <meta name="twitter:image" content="/twitter-card-icon.png" />

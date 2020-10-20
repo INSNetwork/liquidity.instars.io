@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { useTransition, animated } from 'react-spring'
 
 import logo from './logo.svg'
-import logoUltra from './logo-ultra.svg'
 import logoAnt from './logo-ant.svg'
 import logoAnj from './logo-anj.svg'
 import uniswapSvg from '../Input/assets/uniswap.svg'
+import logoInstar from './logo-instars.svg'
 
 function getImage(mode) {
-  if (mode === 'uos') {
-    return logoUltra
+  if (mode === 'instar') {
+    return logoInstar
   }
   if (mode === 'ant') {
     return logoAnt
@@ -25,11 +25,11 @@ function getImage(mode) {
 }
 
 function getOpacity(mode) {
-  return { opacity: mode === 'uos' ? 1 : 0.5 }
+  return { opacity: mode === 'instar' ? 1 : 0.5 }
 }
 
 function Logo({
-  label = 'Ultra Liquidity Rewards',
+  label = 'Instars Liquidity Rewards',
   onClick = () => {},
   mode = 'normal',
   mini = false,
@@ -103,7 +103,7 @@ function Logo({
 
 Logo.propTypes = {
   label: PropTypes.string,
-  mode: PropTypes.oneOf(['uos', 'ant', 'anj', 'normal', 'uni']),
+  mode: PropTypes.oneOf(['instar', 'ant', 'anj', 'normal', 'uni']),
   onClick: PropTypes.func,
 }
 
