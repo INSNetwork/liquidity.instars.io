@@ -84,7 +84,7 @@ function Input({
             &:hover {
               border: 1px solid rgba(255, 255, 255, 0.5);
               &:focus {
-                border-color: #A481F0;
+                border-color: #47bda4;
               }
               &::placeholder {
                 color: #ffffff;
@@ -99,8 +99,8 @@ function Input({
               font-size: 28px;
               line-height: 36px;
               color: #ffffff;
-              border-color: #A481F0;
-              caret-color: #A481F0;
+              border-color: #47bda4;
+              caret-color: #47bda4;
                &::placeholder {
                 visibility: hidden;
                }
@@ -113,8 +113,8 @@ function Input({
               font-size: 28px;
               line-height: 36px;
               color: #ffffff;
-              border-color: #A481F0;
-              caret-color: #A481F0;
+              border-color: #47bda4;
+              caret-color: #47bda4;
                &::placeholder {
                 visibility: hidden;
                }

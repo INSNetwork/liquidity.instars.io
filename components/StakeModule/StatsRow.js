@@ -62,7 +62,7 @@ export default function StatsRow({ balanceUni, decimalsUni, isCompact, isStake }
             font-weight: normal;
             font-size: 12px;
             line-height: 20px;
-            color: #C5ABFF;
+            color: #7bcab5;
           `}
         >
           {' '}

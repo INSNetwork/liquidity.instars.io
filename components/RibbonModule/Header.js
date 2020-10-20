@@ -194,7 +194,7 @@ const ButtonBase = styled.a`
   align-self: center;
   margin-right: 0.4rem;
   margin-left: auto;
-  background: #A481F0;
+  background: #47bda4;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   border: 0;
   border-radius: 4px;

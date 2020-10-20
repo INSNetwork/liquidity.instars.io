@@ -58,7 +58,7 @@ function Button({
       onClick={setSelected}
       css={`
         ${disabled ? 'color: rgba(255,255,255,0.4);' : ''}
-        ${selected ? 'border-bottom: 2px solid #A481F0; opacity: 1;' : 'border: 0;'}
+        ${selected ? 'border-bottom: 2px solid #47bda4; opacity: 1;' : 'border: 0;'}
         ${lastChild ? 'margin-right: 0px;' : ''}
       `}
     >
@@ -82,7 +82,7 @@ const ButtonBase = styled.button`
   transition: all 0.1s ease-out;
   &:active {
     top: 1px;
-    border-bottom: 2px solid #A481F0;
+    border-bottom: 2px solid #47bda4;
     opacity: 1;
   }
   &:focus {

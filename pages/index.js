@@ -3,7 +3,6 @@ import { request } from 'graphql-request'
 import { useViewport } from 'use-viewport'
 import StakeModule from 'components/StakeModule/StakeModule'
 import Header from 'components/RibbonModule/Header'
-import Footer from 'components/RibbonModule/Footer'
 
 const GQL_ENDPOINT = `${process.env.WEBSITE_BACKEND_URL}/graphql`
 
@@ -71,7 +70,6 @@ export default () => {
       >
         <StakeModule />
       </div>
-      <Footer socials={socials} />
     </div>
   )
 }

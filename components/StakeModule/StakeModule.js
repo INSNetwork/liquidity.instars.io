@@ -265,7 +265,7 @@ export default function StakeModule() {
                 css={`
                     &,
                     &:hover {
-                     color: #C5ABFF;
+                     color: #7bcab5;
                     }
                 `}
               >
@@ -316,8 +316,8 @@ export default function StakeModule() {
               ${disabled ||
               (inputError &&
               `
-                background: #534471;
-                color: rgba(255, 255, 255, 0.2);
+                background: #afe4da;
+                color: rgba(255, 255, 255, 1);
                 cursor: default;
                 &:active {
                   top: 0px;
@@ -367,8 +367,8 @@ export default function StakeModule() {
               ${disabled ||
                 (inputError &&
                   `
-                background: #534471;
-                color: rgba(255, 255, 255, 0.2);
+                background: #afe4da;
+                color: rgba(255, 255, 255, 1);
                 cursor: default;
                 &:active {
                   top: 0px;
@@ -666,7 +666,7 @@ const ActionButton = styled.button`
   width: 100%;
   height: 44px;
   cursor: pointer;
-  background: #A481F0;
+  background: #47bda4;
   color: #ffffff;
   font-weight: bold;
   mix-blend-mode: normal;

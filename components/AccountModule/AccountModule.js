@@ -45,7 +45,7 @@ function DisconnectedMode() {
         justify-content: flex-end;
         width: 136px;
         height: 32px;
-        background: #A481F0;
+        background: #47bda4;
         border-radius: 4px;
         margin-left: 0;
         color: white;
@@ -55,7 +55,7 @@ function DisconnectedMode() {
         &:focus,
         &:hover {
           outline: none;
-          background: #AD8EF2;
+          background: #47bda4;
           box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
         }
       `}
