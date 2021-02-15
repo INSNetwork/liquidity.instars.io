@@ -110,7 +110,7 @@ function Header({ socials }) {
                     `}
                   />
                 )}
-                <ButtonBase href="https://instars.com">
+                <ButtonBase href="https://instars.com" onOptionClick={handleSignUpClick}>
                   Return to App
                 </ButtonBase>
               </div>

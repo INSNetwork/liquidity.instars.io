@@ -1,0 +1,184 @@
+---
+default:
+  tags:
+    - ultraio-docker-machine
+  retry:
+    max: 2
+    when:
+      - unknown_failure
+      - api_failure
+      - stuck_or_timeout_failure
+      - runner_system_failure
+      - missing_dependency_failure
+      - runner_unsupported
+
+stages:
+  - build
+  - build-image
+  - deploy
+  - notify
+
+.build:
+  stage: build
+  image: node:12
+  script:
+    - yarn
+    - yarn run build
+    - yarn run export
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist
+      - Dockerfile
+      - .devops
+  cache:
+    key: ${CI_PROJECT_NAME}
+    paths:
+      - node_modules/
+
+build-staging:
+  extends:
+    - .build
+  variables:
+    CHAIN_ID: 4
+    WEBSITE_FRONTEND_URL: https://website.staging.ultra.io
+    WEBSITE_BACKEND_URL: ${STG_BACKEND_URL}
+  only:
+    - master
+    - feature/liquidity-ultra-uos
+
+build-production:
+  extends:
+    - .build
+  variables:
+    CHAIN_ID: 1
+    WEBSITE_FRONTEND_URL: https://ultra.io
+    WEBSITE_BACKEND_URL: ${PROD_BACKEND_URL}
+  only:
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+
+.build-docker-image:
+  stage: build-image
+  variables:
+    GIT_STRATEGY: none
+  image: docker:git
+  services:
+    - docker:dind
+  before_script:
+    # TODO: This should be a Docker image.
+    - apk add --no-cache --virtual .build-deps g++ libffi-dev openssl-dev
+  script:
+    - echo ${ENCODED_GCP_KEY} | base64 -d | docker login -u _json_key --password-stdin https://$GCR_HOSTNAME
+    - docker build -t $GCR_HOSTNAME/$GCR_PROJECT_ID/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA .
+    - docker push $GCR_HOSTNAME/$GCR_PROJECT_ID/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    - docker tag $GCR_HOSTNAME/$GCR_PROJECT_ID/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA $GCR_HOSTNAME/$GCR_PROJECT_ID/$CI_PROJECT_NAME:latest
+    - docker push $GCR_HOSTNAME/$GCR_PROJECT_ID/$CI_PROJECT_NAME:latest
+
+createStagingDockerImage:
+  extends:
+    - .build-docker-image
+  variables:
+    ENCODED_GCP_KEY: $STAGING_ENCODED_GCP_KEY
+    GCR_PROJECT_ID: $STAGING_GCR_PROJECT_ID
+  only:
+    - master
+    - feature/liquidity-ultra-uos
+
+createProdDockerImage:
+  extends:
+    - .build-docker-image
+  variables:
+    ENCODED_GCP_KEY: $PROD_ENCODED_GCP_KEY
+    GCR_PROJECT_ID: $PROD_GCR_PROJECT_ID
+  only:
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+
+.deploy:
+  image: quay.io/ultraio/cloud-sdk-tools:272.0.0
+  dependencies: []
+  before_script:
+    - mkdir -p .devops/k8s/.generated
+    - echo ${ENCODED_GCP_KEY} | base64 -d > ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+    - gcloud container clusters get-credentials $GCP_CLUSTER_NAME  --zone $GCP_REGION --project $GCR_PROJECT_ID
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/ultraio/devops_notify_lib.git
+    - cp ./devops_notify_lib/release_notify_script.sh .
+  script:
+    # Remove single quotes from commit message
+    - |
+        for f in .devops/k8s/templates/*.yaml; do
+          envsubst < $f > ".devops/k8s/.generated/$(basename $f)"
+        done
+    - kubectl apply -f .devops/k8s/.generated/manifest-gcp.yaml --validate=true
+    - kubectl replace -f .devops/k8s/.generated/pdb.yaml --validate=true --force
+    - kubectl rollout status deployment/${APP_NAME}-deployment -n ${KUBE_ENV}-env
+    - /bin/bash release_notify_script.sh success
+
+deploy-staging:
+  extends:
+    - .deploy
+  stage: deploy
+  variables:
+    APP_NAME: $CI_PROJECT_NAME
+    CI_COMMIT_REF_NAME: staging
+    CPU_LIMIT: 1
+    CPU_REQUEST: 200m
+    ENCODED_GCP_KEY: $STAGING_ENCODED_GCP_KEY
+    FRONTEND_URL: $STG_FRONTEND_URL
+    GCP_CLUSTER_NAME: $STAGING_GCP_CLUSTER_NAME
+    GCR_PROJECT_ID: $STAGING_GCR_PROJECT_ID
+    KUBE_APP_IMAGE: $GCR_HOSTNAME/$STAGING_GCR_PROJECT_ID/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    KUBE_ENV: staging
+    MEMORY_LIMIT: 1Gi
+    MEMORY_REQUEST: 150Mi
+    REPLICAS: 2
+    WEBSITE_FRONTEND_URL: https://website.staging.ultra.io
+  environment:
+    name: staging
+    url: $STG_FRONTEND_URL
+  only:
+    - master
+    - feature/liquidity-ultra-uos
+
+deploy-production:
+  extends:
+    - .deploy
+  stage: deploy
+  variables:
+    APP_NAME: $CI_PROJECT_NAME
+    CPU_LIMIT: 1
+    CPU_REQUEST: 200m
+    ENCODED_GCP_KEY: $PROD_ENCODED_GCP_KEY
+    FRONTEND_URL: $PROD_FRONTEND_URL
+    GCP_CLUSTER_NAME: $PROD_GCP_CLUSTER_NAME
+    GCR_PROJECT_ID: $PROD_GCR_PROJECT_ID
+    HPA_MAX_REPLICAS: 3
+    HPA_MIN_REPLICAS: 2
+    KUBE_APP_IMAGE: $GCR_HOSTNAME/$PROD_GCR_PROJECT_ID/$CI_PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    KUBE_ENV: prod
+    MEMORY_LIMIT: 1Gi
+    MEMORY_REQUEST: 150Mi
+    REPLICAS: 2
+    WEBSITE_FRONTEND_URL: https://ultra.io
+  environment:
+    name: production
+    url: $PROD_FRONTEND_URL
+  only:
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+  when: manual
+
+failedNotify:
+  tags:
+    - docker
+  stage: notify
+  dependencies: []
+  image: docker:git
+  before_script:
+  # TODO: This should be a Docker image.
+    - apk add bash jq curl sed
+    - apk upgrade libcurl
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/ultraio/devops_notify_lib.git
+    - cp ./devops_notify_lib/release_notify_script.sh .
+  script:
+    - /bin/bash release_notify_script.sh failed
+  when: on_failure
