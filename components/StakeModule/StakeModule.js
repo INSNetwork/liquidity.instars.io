@@ -3,7 +3,6 @@ import { utils as EthersUtils } from 'ethers'
 import styled from 'styled-components'
 import TokenAmount from 'token-amount'
 import { useViewport } from 'use-viewport'
-import * as Sentry from '@sentry/browser'
 import AccountModule from 'components/AccountModule/AccountModule'
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup'
 import Logo from 'components/Logo/Logo'
@@ -11,7 +10,6 @@ import Input from 'components/Input/Input'
 import StatsRow from './StatsRow'
 import Info from 'components/Info/Info'
 import { bigNum } from 'lib/utils'
-import env from 'lib/environment'
 import { useWalletAugmented } from 'lib/wallet'
 import {
   useClaim,
@@ -30,6 +28,8 @@ const SECTIONS = [
   { id: 'withdraw', copy: 'Withdraw', copyCompact: 'Withdraw' },
   { id: 'claim', copy: 'Claim rewards', copyCompact: 'Claim' },
 ]
+
+const POOLS = ['WBTC', 'ETH']
 
 // Filters and parse the input value of a token amount.
 // Returns a BN.js instance and the filtered value.
@@ -93,6 +93,7 @@ export default function StakeModule() {
   const [activeKey, setActiveKey] = useState(0)
   const [disabled, setDisabled] = useState(false)
   const [notification, setNotification] = useState('')
+  const [pool, setPool] = useState(undefined)
 
   const {
     inputValue,
@@ -158,9 +159,6 @@ export default function StakeModule() {
         setNotification(`${TokenAmount.format(paid, 4, { symbol: 'INSTAR', digits: 17 })} have been claimed.`)
       }
     } catch (err) {
-      if (env('NODE_ENV') !== 'production') {
-        Sentry.captureException(err)
-      }
     } finally {
       setDisabled(false)
       resetInputs()
@@ -190,6 +188,15 @@ export default function StakeModule() {
         padding: 0 32px;
       `}
     >
+      <section>
+        <button onClick={() => setPool(POOLS[0])}>
+          {POOLS[0]}
+        </button>
+        <button onClick={() => setPool(POOLS[1])}>
+          {POOLS[1]}
+        </button>
+      </section>
+      {pool && (
       <main
         css={`
           display: flex;
@@ -388,7 +395,8 @@ export default function StakeModule() {
           <ClaimSectionLiquidityPool isCompact={isCompact} />
         )}
       </main>
-    </div>
+      )}
+   </div>
   )
 }
 
@@ -621,7 +629,7 @@ function ClaimSectionLiquidityPool({ isCompact }) {
               }
             `}
           >
-            {isCompact ? 'Total $ USD liquidity' : 'Total $ USD liquidity in the INSTAR/ETH Uniswap liquidity pool'}
+            {isCompact ? 'Total $ USD liquidity' : `Total $ USD liquidity in the INSTAR/ETH Uniswap liquidity pool`}
           </span>
           <span
             css={`
