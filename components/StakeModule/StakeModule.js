@@ -13,16 +13,7 @@ import Info from 'components/Info/Info'
 import { bigNum } from 'lib/utils'
 import env from 'lib/environment'
 import { useWalletAugmented } from 'lib/wallet'
-import {
-  useClaim,
-  useRewardsPaid,
-  useStake,
-  useBalanceOf,
-  useTokenDecimals,
-  useTokenUniswapInfo,
-  useUniStaked,
-  useWithdraw,
-} from 'lib/web3-contracts'
+import { useClaim, useRewardsPaid, useStake, useBalanceOf, useTokenUniswapInfo, useUniStaked, useWithdraw, useTokenDecimals } from 'lib/web3-contracts'
 import { parseUnits } from 'lib/web3-utils'
 
 const SECTIONS = [
@@ -89,7 +80,7 @@ function useConvertInputs() {
   return inputValues
 }
 
-export default function StakeModule() {
+export default function StakeModule({pool}) {
   const [activeKey, setActiveKey] = useState(0)
   const [disabled, setDisabled] = useState(false)
   const [notification, setNotification] = useState('')
@@ -103,12 +94,12 @@ export default function StakeModule() {
     setInputValue,
   } = useConvertInputs()
   const { account, connected } = useWalletAugmented()
-  const selectedTokenBalance = useBalanceOf('TOKEN_UNI')
-  const { loading: loadingStaked, staked } = useUniStaked(account)
+  const selectedTokenBalance = useBalanceOf(pool, 'TOKEN_UNI')
+  const { loading: loadingStaked, staked } = useUniStaked(pool, account)
   const decimalsUni = useTokenDecimals('UNI-V2')
-  const claim = useClaim()
-  const stake = useStake()
-  const withdraw = useWithdraw()
+  const claim = useClaim(pool)
+  const stake = useStake(pool)
+  const withdraw = useWithdraw(pool)
   const { below } = useViewport()
   // Super ugly Next.js workaround to let us have differences between SSR & client
   const [isCompact, setIsCompact] = useState(false)
@@ -179,7 +170,7 @@ export default function StakeModule() {
     [activeKey, amount, disabled, selectedTokenBalance]
   )
 
-  const { paid } = useRewardsPaid(account)
+  const { paid } = useRewardsPaid(pool, account)
 
   return (
     <div
@@ -355,7 +346,7 @@ export default function StakeModule() {
           />
         )}
         {SECTIONS[activeKey].id === 'claim' && (
-          <ClaimSectionReward isCompact={isCompact} />
+          <ClaimSectionReward pool={pool} isCompact={isCompact} />
         )}
         {SECTIONS[activeKey].id !== 'stake' && (
           <ActionButton
@@ -385,7 +376,7 @@ export default function StakeModule() {
           </ActionButton>
         )}
         {SECTIONS[activeKey].id === 'claim' && (
-          <ClaimSectionLiquidityPool isCompact={isCompact} />
+          <ClaimSectionLiquidityPool isCompact={isCompact} pool={pool} />
         )}
       </main>
     </div>
@@ -523,9 +514,9 @@ function WithdrawSection({ loading, isCompact, staked }) {
   )
 }
 
-function ClaimSectionReward() {
+function ClaimSectionReward({pool}) {
   const { account } = useWalletAugmented()
-  const { loading, paid } = useRewardsPaid(account)
+  const { loading, paid } = useRewardsPaid(pool, account)
 
   return (
     <div>
@@ -585,8 +576,8 @@ function ClaimSectionReward() {
   )
 }
 
-function ClaimSectionLiquidityPool({ isCompact }) {
-  const [loadingUniswapInfo, uniswapInfo] = useTokenUniswapInfo('INSTAR')
+function ClaimSectionLiquidityPool({ isCompact, pool }) {
+  const [loadingUniswapInfo, uniswapInfo] = useTokenUniswapInfo(pool, 'INSTAR')
 
   return (
     <div>
@@ -621,7 +612,7 @@ function ClaimSectionLiquidityPool({ isCompact }) {
               }
             `}
           >
-            {isCompact ? 'Total $ USD liquidity' : 'Total $ USD liquidity in the INSTAR/ETH Uniswap liquidity pool'}
+            {isCompact ? 'Total $ USD liquidity' : `Total $ USD liquidity in the INSTAR/${pool} Uniswap liquidity pool`}
           </span>
           <span
             css={`

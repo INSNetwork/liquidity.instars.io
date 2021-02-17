@@ -47,17 +47,11 @@ export default class Document extends NextDocument {
           <meta name="twitter:site" content="instars.com" />
           <meta name="twitter:description" content={env('SITE_DESCRIPTION')} />
           <meta name="twitter:title" content={env('SITE_TITLE')} />
-          <meta name="twitter:image" content="/twitter-card-icon.png" />
 
           <meta property="og:title" content={env('SITE_TITLE')} />
           <meta property="og:description" content={env('SITE_DESCRIPTION')} />
           <meta property="og:url" content={env('SITE_URL')} />
           <meta property="og:site_name" content={env('SITE_TITLE')} />
-          <meta property="og:image" content="/twitter-card-icon.png" />
-          <meta
-            property="og:image:secure_url"
-            content="/twitter-card-icon.png"
-          />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="300" />
 

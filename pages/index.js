@@ -3,13 +3,17 @@ import { request } from 'graphql-request'
 import { useViewport } from 'use-viewport'
 import StakeModule from 'components/StakeModule/StakeModule'
 import Header from 'components/RibbonModule/Header'
+import styled from 'styled-components'
 
 const GQL_ENDPOINT = `${process.env.WEBSITE_BACKEND_URL}/graphql`
+
+const POOLS = ['WBTC', 'ETH']
 
 export default () => {
   const { below } = useViewport()
   const [socials, setSocials] = useState([])
   const [isCompact, setIsCompact] = useState(false)
+  const [pool, setPool] = useState(undefined)
   const smallLayout = below(415)
   useEffect(() => {
     setTimeout(() => {
@@ -68,8 +72,70 @@ export default () => {
           justify-content: flex-start;
         `}
       >
-        <StakeModule />
+        {!pool &&
+          (
+            <section css={`
+              text-align: center;
+              color: #FFFFFF;
+            `}>
+              <h4>Select a pool: </h4>
+              <ActionButton onClick={() => setPool(POOLS[0])}>
+                INSTAR/{POOLS[0]}
+              </ActionButton>
+              <ActionButton onClick={() => setPool(POOLS[1])}>
+                INSTAR/{POOLS[1]}
+              </ActionButton>
+            </section>
+          )
+        }
+        {pool && (
+          <div css={`
+            text-align: center;
+            margin-bottom: 2rem;
+          `}>
+            <h4 css={`color: #FFFFFF; margin-bottom: 1rem;`}>Selected Pool: INSTAR/{pool}</h4>
+            <ActionButton onClick={() => location.reload()}>Go Back</ActionButton>
+          </div>
+        )}
+        {pool && <StakeModule pool={pool} />}
       </div>
     </div>
   )
 }
+
+const ActionButton = styled.button`
+  position: relative;
+  max-width: 11.25rem;
+  align-self: center;
+  margin-right: 0.4rem;
+  margin-left: auto;
+  background: #47bda4;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  max-height: 32px;
+  &:focus,
+  &:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    outline: none;
+    background: #19a388;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+  }   
+  
+  @media (max-width: 640px) {
+    font-size: 10px;
+    line-height: 12px;
+    padding: 0.375rem 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    min-width: 7.5rem;
+  }             
+`
