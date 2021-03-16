@@ -64,8 +64,6 @@ export default () => {
 
   const [loadingWBTCInfo, wbtcInfo] = useTokenUniswapInfo('WBTC', 'INSTAR')
   const [loadingETHInfo, ethInfo] = useTokenUniswapInfo('ETH', 'INSTAR')
-  console.log(wbtcInfo, ethInfo);
-
   return (
     <div>
       <Header socials={socials} />

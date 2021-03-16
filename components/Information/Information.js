@@ -34,7 +34,7 @@ function Information() {
         <div className="f-title">
           <img src="market/logo-banner.png" alt="" />
           INSTAR Currently has&nbsp; 
-          {loadingInstarInfo || !instarInfo ? '' : '$' + nFormatter(Number(instarInfo?.token?.totalLiquidity ? instarInfo.token.totalLiquidity : 0)) ?? '$0'}
+          {loadingInstarInfo || !instarInfo ? '' : '$' + nFormatter(Number(instarInfo?.dayData?.totalLiquidityUSD ? instarInfo.dayData.totalLiquidityUSD : 0)) ?? '$0'}
           &nbsp;of Liquidity on Uniswap
         </div>
         <p>Access INSTAR liquidity on Uniswap</p>
