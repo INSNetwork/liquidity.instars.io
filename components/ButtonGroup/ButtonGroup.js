@@ -15,6 +15,8 @@ export default function ButtonGroup({
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        background: #F3F4F8;
+        border-radius: 4px;
         ${isCompact &&
           `
           button {

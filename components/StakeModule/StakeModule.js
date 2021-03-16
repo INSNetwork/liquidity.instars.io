@@ -191,9 +191,8 @@ export default function StakeModule({pool}) {
           background: #FFFFFF;
           mix-blend-mode: normal;
           padding: 0 20px 20px;
-          border: 1px solid #4c5585;
-          box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25), 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12);
-          border-radius: 8px;
+          box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.06);
+          border-radius: 4px;
           ${isCompact &&
             `
             max-height: 100%;

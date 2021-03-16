@@ -1,0 +1,183 @@
+.instar-features {
+  position: relative;
+  background-image: url('/market/buy-banner.png');
+  background-color: rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+  @media (max-width: 992px) {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    background-image: url('/market/buy-banner-mobile.png');
+  }
+
+  .feature-title {
+    .f-title {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 1.875rem;
+      line-height: 2.5rem;
+      color: white;
+      margin-bottom: 0.75rem;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      @media (max-width: 992px) {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        flex-wrap: wrap;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      img {
+        position: absolute;
+        left: -12rem;
+        top: -3rem;
+        @media (max-width: 992px) {
+          display: none;
+        }
+      }
+
+      span {
+        font-style: normal;
+        font-weight: 800;
+        font-size: 2.625rem;
+        line-height: 3.5rem;
+        color: #44C0B0;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        @media (max-width: 992px) {
+          font-style: normal;
+          font-weight: 800;
+          font-size: 2.25rem;
+          line-height: 3rem;
+        }
+      }
+    }
+
+    p {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+      text-align: center;
+      color: #F09429;
+      margin-bottom: 2.25rem;
+      @media (max-width: 992px) {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.375rem;
+        margin-bottom: 1.25rem;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+    @media (max-width: 992px) {
+      margin-bottom: 2rem;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 0.875rem;
+      line-height: 100%;
+      color: #FFFFFF;
+      padding: 1.25rem 0.625rem;
+      border: 1px solid white;
+      border-radius: 0.25rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      background: transparent;
+      text-decoration: none;
+      img {
+        margin-top: 0.5rem;
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        background: rgba($color: white, $alpha: 0.2);
+      }
+
+      @media (max-width: 992px) {
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+        padding: 0.625rem;
+      }
+    }
+  }
+
+  .features {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    @media (max-width: 992px) {
+      flex-direction: column;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem 3rem 1.5rem;
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12));
+      backdrop-filter: blur(16px);
+      border-radius: 0.25rem;
+      margin-bottom: 1.5rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      flex: 1;
+      text-decoration: none;
+
+      &:hover {
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+      }
+
+      @media (max-width: 992px) {
+        padding: 1.5rem;
+        width: 100%;
+      }
+
+      img {
+        margin-right: 1.5rem;
+      }
+
+      div {
+        p {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1.25rem;
+          color: #FFFFFF;
+          text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+          margin-bottom: 1rem;
+        }
+
+        h4 {
+          font-style: normal;
+          font-weight: bold;
+          font-size: 2rem;
+          line-height: 1.25rem;
+          color: #44C0B0;
+          text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+  }
+}

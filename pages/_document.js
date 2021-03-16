@@ -59,7 +59,7 @@ export default class Document extends NextDocument {
           <style>{`
             html, body {
             min-height: 100vh;
-            background: linear-gradient(90deg,#232f51 0,#353f74 100.56%);
+            background: white;
             overflow: auto;
             }
           `}</style>
