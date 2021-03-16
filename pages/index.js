@@ -3,7 +3,10 @@ import { request } from 'graphql-request'
 import { useViewport } from 'use-viewport'
 import StakeModule from 'components/StakeModule/StakeModule'
 import Header from 'components/RibbonModule/Header'
+import Information from 'components/Information/Information'
+import Steps from 'components/Steps/steps'
 import styled from 'styled-components'
+import './styles.scss'
 
 const GQL_ENDPOINT = `${process.env.WEBSITE_BACKEND_URL}/graphql`
 
@@ -60,6 +63,7 @@ export default () => {
   return (
     <div>
       <Header socials={socials} />
+      <Information />
       <div
         css={`
           position: relative;
@@ -72,19 +76,72 @@ export default () => {
           justify-content: flex-start;
         `}
       >
+        <h4 css={`
+          font-style: normal;
+          font-weight: bold;
+          font-size: 36px;
+          line-height: 49px;
+          color: #474955;
+          margin-bottom: 12px;
+          text-align: center;
+        `}>INSTAR Liquidity Mining Rewards</h4>
+        <p css={`
+          font-style: normal;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 25px;
+          color: #474955;
+          margin-bottom: 60px;
+          text-align: center;
+        `}>Earn INSTAR on top of standard LP rewards for providing liquidity on Uniswap</p>
         {!pool &&
           (
             <section css={`
               text-align: center;
               color: #FFFFFF;
             `}>
-              <h4>Select a pool: </h4>
-              <ActionButton onClick={() => setPool(POOLS[0])}>
-                INSTAR/{POOLS[0]}
-              </ActionButton>
-              <ActionButton onClick={() => setPool(POOLS[1])}>
-                INSTAR/{POOLS[1]}
-              </ActionButton>
+              <div className="action-container">
+                <div className="action-card">
+                  <img src="market/w1.png" alt="" />
+                  <h4>WBTC/INSTAR</h4>
+                  <hr />
+                  <div>
+                    <p>Expiration Date</p>
+                    <h5>Mar 31, 2021</h5>
+                  </div>
+                  <div>
+                    <p>Total Liquidity</p>
+                    <h5>$397,000</h5>
+                  </div>
+                  <div>
+                    <p>Total Rewards</p>
+                    <h5>3,000,000 INSTAR</h5>
+                  </div>
+                  <ActionButton onClick={() => setPool(POOLS[0])}>
+                    Select
+                  </ActionButton>
+                </div>
+                <div className="action-card">
+                  <img src="market/w2.png" alt="" />
+                  <h4>ETH/INSTAR</h4>
+                  <hr />
+                  <div>
+                    <p>Expiration Date</p>
+                    <h5>Mar 31, 2021</h5>
+                  </div>
+                  <div>
+                    <p>Total Liquidity</p>
+                    <h5>$397,000</h5>
+                  </div>
+                  <div>
+                    <p>Total Rewards</p>
+                    <h5>3,000,000 INSTAR</h5>
+                  </div>
+                  <ActionButton onClick={() => setPool(POOLS[1])}>
+                    Select
+                  </ActionButton>
+                </div>
+              </div>
             </section>
           )
         }
@@ -99,6 +156,7 @@ export default () => {
         )}
         {pool && <StakeModule pool={pool} />}
       </div>
+      <Steps />
     </div>
   )
 }

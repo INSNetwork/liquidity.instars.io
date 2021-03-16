@@ -1,6 +1,7 @@
 const path = require('path')
 const { execSync } = require('child_process')
 const withCSS = require('@zeit/next-css')
+const withSass = require('@zeit/next-sass')
 const withImages = require('next-images')
 const withFonts = require('next-fonts')
 const { fullEnvironment } = require('./lib/environment')
@@ -19,18 +20,20 @@ const ENV = fullEnvironment()
 delete ENV.NODE_ENV
 
 module.exports = withCSS(
-  withFonts(
-    withImages({
-      webpack(config, options) {
-        return ['lib', 'components'].reduce((config, dirname) => {
-          config.resolve.alias[dirname] = path.join(__dirname, dirname)
-          return config
-        }, config)
-      },
-      env: ENV,
-      devIndicators: {
-        autoPrerender: false,
-      },
-    })
+  withSass(
+    withFonts(
+      withImages({
+        webpack(config, options) {
+          return ['lib', 'components'].reduce((config, dirname) => {
+            config.resolve.alias[dirname] = path.join(__dirname, dirname)
+            return config
+          }, config)
+        },
+        env: ENV,
+        devIndicators: {
+          autoPrerender: false,
+        }
+      })
+    )
   )
 )

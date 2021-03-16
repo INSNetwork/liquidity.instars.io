@@ -56,6 +56,7 @@ export default function App({ Component, pageProps }) {
         <NextHead>
           <title>Uniswap Staking Program</title>
         </NextHead>
+
         <GlobalStyles />
         <WalletProvider>
           <Component {...pageProps} />

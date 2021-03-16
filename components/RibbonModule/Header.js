@@ -118,35 +118,6 @@ function Header({ socials }) {
           </nav>
         </div>
       </div>
-      <div className="container">
-        <div className="row">
-          <div css={`
-            width: 100%;
-            padding: 0 2rem;
-          `}
-          >
-            <div css={`
-                padding-top: 7rem;
-                @media (max-width: 640px) {
-                  padding: 2.5rem 0;
-                }
-             `}
-            >
-              <h1 css={`
-                    font-weight: bold;
-                    color: #FFFFFF;
-                    text-align: center;
-                    @media (min-width: 640px) {
-                      min-height: 7.5rem;
-                    }
-                 `}
-              >
-                Liquidity Rewards Program
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
