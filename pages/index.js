@@ -7,6 +7,8 @@ import Information from 'components/Information/Information'
 import Steps from 'components/Steps/steps'
 import styled from 'styled-components'
 import './styles.scss'
+import { useTokenUniswapInfo } from 'lib/web3-contracts'
+
 
 const GQL_ENDPOINT = `${process.env.WEBSITE_BACKEND_URL}/graphql`
 
@@ -60,6 +62,10 @@ export default () => {
     fetchSocials()
   }, [])
 
+  const [loadingWBTCInfo, wbtcInfo] = useTokenUniswapInfo('WBTC', 'INSTAR')
+  const [loadingETHInfo, ethInfo] = useTokenUniswapInfo('ETH', 'INSTAR')
+  console.log(wbtcInfo, ethInfo);
+
   return (
     <div>
       <Header socials={socials} />
@@ -111,7 +117,11 @@ export default () => {
                   </div>
                   <div>
                     <p>Total Liquidity</p>
-                    <h5>$397,000</h5>
+                    <h5>{loadingWBTCInfo || !wbtcInfo
+                          ? 'loading...'
+                          : '$' + Math.trunc(Number(wbtcInfo?.reserveUSD ? wbtcInfo.reserveUSD : 0))?.toLocaleString(
+                          'en-US'
+                          ) ?? '$0'}{' '}</h5>
                   </div>
                   <div>
                     <p>Total Rewards</p>
@@ -131,7 +141,11 @@ export default () => {
                   </div>
                   <div>
                     <p>Total Liquidity</p>
-                    <h5>$397,000</h5>
+                    <h5>{loadingETHInfo || !ethInfo
+                          ? 'loading...'
+                          : '$' + Math.trunc(Number(ethInfo?.reserveUSD ? ethInfo.reserveUSD : 0))?.toLocaleString(
+                          'en-US'
+                          ) ?? '$0'}{' '}</h5>
                   </div>
                   <div>
                     <p>Total Rewards</p>
