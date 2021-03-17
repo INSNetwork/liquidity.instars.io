@@ -3,6 +3,10 @@
   align-items: flex-start;
   justify-content: center;
 
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+
   .action-card {
     margin-left: 14px;
     margin-right: 14px;
@@ -12,6 +16,10 @@
     border-radius: 4px;
     min-width: 265px;
     text-align: left;
+
+    @media (max-width: 992px) {
+      margin-bottom: 1.25rem;
+    }
 
     img {
       height: 36px;
