@@ -111,7 +111,7 @@ function Header({ socials }) {
                   />
                 )}
                 <ButtonBase href="https://instars.com">
-                  Return to App
+                  Connect Wallet
                 </ButtonBase>
               </div>
             </div>

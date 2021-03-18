@@ -78,6 +78,11 @@ export default () => {
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
+
+          @media (max-width: 992px) {
+            padding: 5rem 1.25rem;
+          }
+
         `}
       >
         <h4 css={`
@@ -88,6 +93,15 @@ export default () => {
           color: #474955;
           margin-bottom: 12px;
           text-align: center;
+          @media (max-width: 992px) {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 33px;
+            text-align: center;
+            color: #303864;
+            margin-bottom: 24px;
+          }
         `}>INSTAR Liquidity Mining Rewards</h4>
         <p css={`
           font-style: normal;
@@ -97,6 +111,15 @@ export default () => {
           color: #474955;
           margin-bottom: 60px;
           text-align: center;
+          @media (max-width: 992px) {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            color: #474955;
+            margin-bottom: 40px;
+          }
         `}>Earn INSTAR on top of standard LP rewards for providing liquidity on Uniswap</p>
         {!pool &&
           (
@@ -163,7 +186,7 @@ export default () => {
             margin-bottom: 2rem;
           `}>
             <h4 css={`color: #FFFFFF; margin-bottom: 1rem;`}>Selected Pool: INSTAR/{pool}</h4>
-            <ActionButton onClick={() => location.reload()}>Go Back</ActionButton>
+            <ButtonBase href="https://instars.com">Go Back</ButtonBase>
           </div>
         )}
         {pool && <StakeModule pool={pool} />}
@@ -174,6 +197,42 @@ export default () => {
 }
 
 const ActionButton = styled.button`
+  position: relative;
+  max-width: 11.25rem;
+  align-self: center;
+  margin-right: 0.4rem;
+  margin-left: auto;
+  background: #47bda4;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  max-height: 32px;
+  &:focus,
+  &:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    outline: none;
+    background: #19a388;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+  }   
+  
+  @media (max-width: 640px) {
+    font-size: 10px;
+    line-height: 12px;
+    padding: 0.375rem 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    min-width: 7.5rem;
+  }             
+`
+const ButtonBase = styled.a`
   position: relative;
   max-width: 11.25rem;
   align-self: center;
