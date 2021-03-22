@@ -2,10 +2,9 @@ import React, { useEffect, useState, useCallback }  from 'react'
 import { useViewport } from 'use-viewport'
 import styled from 'styled-components'
 import instarLogo from 'components/Logo/logo-instars.svg'
-import SocialLinks from 'components/SocialLinks/SocialLinks'
-import './style.css'
+import './style.scss'
 
-function Header({ socials }) {
+function Header({ tab, change }) {
   const { below } = useViewport()
   const [socialsInNav, setSocialsInNav] = useState(false)
   const [isSmallLayout, setIsSmallLayout] = useState(false)
@@ -25,14 +24,24 @@ function Header({ socials }) {
     }, 0)
   }, [normalDesktopLayout])
 
-  useEffect(() => {
-    setSocialsInNav(
-      socials.filter((item) => item.socials.length).length <=
-      3 && !!isGtNormalDesktop)
-  }, [isGtNormalDesktop, socials])
-
   const handleSignUpClick = useCallback(data => {
     location.replace(`https://instars.com`, "_self")
+  }, [])
+
+  const handleConnect = useCallback(() => {
+
+    let elem = document.getElementById('mining-form');
+
+    if (elem) {
+      elem.scrollIntoView({
+        behavior: 'smooth'
+      });
+    } else {
+      elem = document.getElementById('uniswap-container');
+      elem.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
   }, [])
 
   return (
@@ -40,15 +49,7 @@ function Header({ socials }) {
       <div className="page-header" css={` background: #FFFFFF; `}>
         <PageBackdrop />
         <div className="container">
-          <nav css={`
-            ${`
-                @media (min-width: 1352px) {
-                  padding-top: 10px;
-                  padding-bottom: 10px;
-                }
-              `}
-           `}
-          >
+          <nav>
             <div className="main-navigation-wrapper">
               <div className="main-navigation"
                    css={`
@@ -90,27 +91,12 @@ function Header({ socials }) {
                     `}>instars.com</span>
                   </a>
                 </section>
-                {socialsInNav && (
-                  <SocialLinks
-                    socialTypes={socials}
-                    socialDropdownPlacement="bottom-start"
-                    socialDropdownPopoverStyles={`
-                      left: 16px !important;
-                      top: 3px !important;
-
-                      @media (min-width: 1700px) {
-                        min-width: 16rem !important;
-                      }
-                    `}
-                    socialLinksWrapperStyles={`
-                      max-width: 7.5rem;
-                      align-items: center;
-                      padding: 0 0.75rem 0 0;
-                      margin: -1.25rem 0 0 !important;
-                    `}
-                  />
-                )}
-                <ButtonBase href="https://instars.com">
+                <div className="header-menus">
+                  <a className={tab === 0 ? 'active' : ''} onClick={() => change(0)}>Buy INSTAR</a>
+                  <a className={tab === 1 ? 'active' : ''} onClick={() => change(1)}>Liquidity Mining</a>
+                  <a href="https://instars.com/instartoken">Explore INSTAR</a>
+                </div>
+                <ButtonBase onClick={handleConnect}>
                   Connect Wallet
                 </ButtonBase>
               </div>
@@ -140,7 +126,7 @@ const ButtonBase = styled.a`
   border: 0;
   border-radius: 4px;
   cursor: pointer;
-  color: white;
+  color: white !important;
   font-size: 12px;
   font-weight: 700;
   line-height: 1rem;

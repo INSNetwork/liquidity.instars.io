@@ -53,3 +53,25 @@ h1 {
     line-height: 44px;
   }
 }
+
+.header-menus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  a {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #2D376A !important;
+    padding: 1.5rem 2rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 5px solid #2D376A;
+    }
+  }
+}
