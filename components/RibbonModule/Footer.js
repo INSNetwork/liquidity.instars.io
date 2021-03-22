@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import instarslogo from 'components/Logo/logo-instars.svg'
 import SocialLinks from 'components/SocialLinks/SocialLinks'
-import './style.css'
+import './style.scss'
 
 function Footer({ socials }) {
   return (

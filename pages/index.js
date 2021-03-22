@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { request } from 'graphql-request'
 import { useViewport } from 'use-viewport'
 import StakeModule from 'components/StakeModule/StakeModule'
@@ -8,7 +8,8 @@ import Steps from 'components/Steps/steps'
 import styled from 'styled-components'
 import './styles.scss'
 import { useTokenUniswapInfo } from 'lib/web3-contracts'
-
+import UniswapContainer from 'components/Uniswap/uniswap'
+import ExchangeContainer from 'components/Exchange/exchange'
 
 const GQL_ENDPOINT = `${process.env.WEBSITE_BACKEND_URL}/graphql`
 
@@ -19,6 +20,7 @@ export default () => {
   const [socials, setSocials] = useState([])
   const [isCompact, setIsCompact] = useState(false)
   const [pool, setPool] = useState(undefined)
+  const [tab, setTab] = useState(0)
   const smallLayout = below(415)
   useEffect(() => {
     setTimeout(() => {
@@ -27,7 +29,6 @@ export default () => {
   }, [smallLayout])
 
   useEffect(() => {
-
     async function fetchSocials() {
       let response
       try {
@@ -53,7 +54,7 @@ export default () => {
           throw new Error('Wrong response')
         }
 
-        setSocials(response.socialTypes.filter((item) => item.socials.length))
+        setSocials(response.socialTypes.filter(item => item.socials.length))
       } catch (err) {
         console.error('An error has occurred')
       }
@@ -62,71 +63,86 @@ export default () => {
     fetchSocials()
   }, [])
 
+  const changeTab = useCallback(index => {
+    setTab(index)
+  }, [])
+
   const [loadingWBTCInfo, wbtcInfo] = useTokenUniswapInfo('WBTC', 'INSTAR')
   const [loadingETHInfo, ethInfo] = useTokenUniswapInfo('ETH', 'INSTAR')
   return (
     <div>
-      <Header socials={socials} />
+      <Header tab={tab} change={changeTab} />
       <Information />
-      <div
-        css={`
-          position: relative;
-          min-height: 800px;
-          padding: 6em 0;
-          background: transparent;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
+      {tab === 1 && (
+        <div
+          id="mining-form"
+          css={`
+            position: relative;
+            min-height: 800px;
+            padding: 6em 0;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
 
-          @media (max-width: 992px) {
-            padding: 5rem 1.25rem;
-          }
-
-        `}
-      >
-        <h4 css={`
-          font-style: normal;
-          font-weight: bold;
-          font-size: 36px;
-          line-height: 49px;
-          color: #474955;
-          margin-bottom: 12px;
-          text-align: center;
-          @media (max-width: 992px) {
-            font-style: normal;
-            font-weight: bold;
-            font-size: 24px;
-            line-height: 33px;
-            text-align: center;
-            color: #303864;
-            margin-bottom: 24px;
-          }
-        `}>INSTAR Liquidity Mining Rewards</h4>
-        <p css={`
-          font-style: normal;
-          font-weight: 600;
-          font-size: 18px;
-          line-height: 25px;
-          color: #474955;
-          margin-bottom: 60px;
-          text-align: center;
-          @media (max-width: 992px) {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 22px;
-            text-align: center;
-            color: #474955;
-            margin-bottom: 40px;
-          }
-        `}>Earn INSTAR on top of standard LP rewards for providing liquidity on Uniswap</p>
-        {!pool &&
-          (
-            <section css={`
+            @media (max-width: 992px) {
+              padding: 5rem 1.25rem;
+            }
+          `}
+        >
+          <h4
+            css={`
+              font-style: normal;
+              font-weight: bold;
+              font-size: 36px;
+              line-height: 49px;
+              color: #474955;
+              margin-bottom: 12px;
               text-align: center;
-              color: #FFFFFF;
-            `}>
+              @media (max-width: 992px) {
+                font-style: normal;
+                font-weight: bold;
+                font-size: 24px;
+                line-height: 33px;
+                text-align: center;
+                color: #303864;
+                margin-bottom: 24px;
+              }
+            `}
+          >
+            INSTAR Liquidity Mining Rewards
+          </h4>
+          <p
+            css={`
+              font-style: normal;
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 25px;
+              color: #474955;
+              margin-bottom: 60px;
+              text-align: center;
+              @media (max-width: 992px) {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 22px;
+                text-align: center;
+                color: #474955;
+                margin-bottom: 40px;
+              }
+            `}
+          >
+            Earn INSTAR on top of standard LP rewards for providing liquidity on
+            Uniswap
+          </p>
+          {!pool && (
+            <section
+              css={`
+                text-align: center;
+                color: #ffffff;
+              `}
+            >
               <div className="action-container">
                 <div className="action-card">
                   <img src="market/w1.png" alt="" />
@@ -138,11 +154,16 @@ export default () => {
                   </div>
                   <div>
                     <p>Total Liquidity</p>
-                    <h5>{loadingWBTCInfo || !wbtcInfo
-                          ? 'loading...'
-                          : '$' + Math.trunc(Number(wbtcInfo?.reserveUSD ? wbtcInfo.reserveUSD : 0))?.toLocaleString(
-                          'en-US'
-                          ) ?? '$0'}{' '}</h5>
+                    <h5>
+                      {loadingWBTCInfo || !wbtcInfo
+                        ? 'loading...'
+                        : '$' +
+                            Math.trunc(
+                              Number(
+                                wbtcInfo?.reserveUSD ? wbtcInfo.reserveUSD : 0
+                              )
+                            )?.toLocaleString('en-US') ?? '$0'}{' '}
+                    </h5>
                   </div>
                   <div>
                     <p>Total Rewards</p>
@@ -162,11 +183,16 @@ export default () => {
                   </div>
                   <div>
                     <p>Total Liquidity</p>
-                    <h5>{loadingETHInfo || !ethInfo
-                          ? 'loading...'
-                          : '$' + Math.trunc(Number(ethInfo?.reserveUSD ? ethInfo.reserveUSD : 0))?.toLocaleString(
-                          'en-US'
-                          ) ?? '$0'}{' '}</h5>
+                    <h5>
+                      {loadingETHInfo || !ethInfo
+                        ? 'loading...'
+                        : '$' +
+                            Math.trunc(
+                              Number(
+                                ethInfo?.reserveUSD ? ethInfo.reserveUSD : 0
+                              )
+                            )?.toLocaleString('en-US') ?? '$0'}{' '}
+                    </h5>
                   </div>
                   <div>
                     <p>Total Rewards</p>
@@ -178,20 +204,37 @@ export default () => {
                 </div>
               </div>
             </section>
-          )
-        }
-        {pool && (
-          <div css={`
-            text-align: center;
-            margin-bottom: 2rem;
-          `}>
-            <h4 css={`color: #FFFFFF; margin-bottom: 1rem;`}>Selected Pool: INSTAR/{pool}</h4>
-            <ButtonBase href="https://instars.com">Go Back</ButtonBase>
-          </div>
-        )}
-        {pool && <StakeModule pool={pool} />}
-      </div>
-      <Steps />
+          )}
+          {pool && (
+            <div
+              css={`
+                text-align: center;
+                margin-bottom: 2rem;
+              `}
+            >
+              <h4
+                css={`
+                  color: #ffffff;
+                  margin-bottom: 1rem;
+                `}
+              >
+                Selected Pool: INSTAR/{pool}
+              </h4>
+              <ButtonBase href="https://instars.com">Go Back</ButtonBase>
+            </div>
+          )}
+          {pool && <StakeModule pool={pool} />}
+        </div>
+      )}
+      {tab === 0 &&
+        <UniswapContainer />
+      }
+      {tab === 0 &&
+        <ExchangeContainer />
+      }
+      {tab === 1 &&
+        <Steps />
+      }
     </div>
   )
 }
@@ -215,22 +258,23 @@ const ActionButton = styled.button`
   max-height: 32px;
   &:focus,
   &:hover {
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     outline: none;
     background: #19a388;
-    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
-  }   
-  
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14),
+      0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+  }
+
   @media (max-width: 640px) {
     font-size: 10px;
     line-height: 12px;
     padding: 0.375rem 1rem;
   }
-  
+
   @media (min-width: 640px) {
     min-width: 7.5rem;
-  }             
+  }
 `
 const ButtonBase = styled.a`
   position: relative;
@@ -251,20 +295,21 @@ const ButtonBase = styled.a`
   max-height: 32px;
   &:focus,
   &:hover {
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     outline: none;
     background: #19a388;
-    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
-  }   
-  
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14),
+      0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+  }
+
   @media (max-width: 640px) {
     font-size: 10px;
     line-height: 12px;
     padding: 0.375rem 1rem;
   }
-  
+
   @media (min-width: 640px) {
     min-width: 7.5rem;
-  }             
+  }
 `
