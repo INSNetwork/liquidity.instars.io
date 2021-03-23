@@ -26,7 +26,7 @@ function nFormatter(num, digits) {
 
 function Information() {
   const [loadingInstarInfo, instarInfo] = useInstarUniswapInfo()
-  const marketCap = Number(instarInfo?.coincapResult?.data?.priceUsd) * Number(instarInfo?.totalSupply); 
+  const marketCap = Number(instarInfo?.cryptoResult?.usd_price_current) * Number(instarInfo?.totalSupply); 
   const stakedPercentage = Number(instarInfo?.totalStaked) / Number(instarInfo?.totalSupply) * 100;
   return (
     <div className="instar-features">
@@ -35,7 +35,7 @@ function Information() {
           <img src="market/logo-banner.png" alt="" />
           INSTAR Currently has
           <span>
-            {loadingInstarInfo || !instarInfo ? '' : '$' + nFormatter(Number(instarInfo?.dayData?.totalLiquidityUSD ? instarInfo.dayData.totalLiquidityUSD : 0)) ?? '$0'}
+            {loadingInstarInfo || !instarInfo ? '' : '$' + nFormatter(Number(instarInfo?.dayData?.totalLiquidityUSD ? instarInfo.dayData.totalLiquidityUSD * 2 : 0)) ?? '$0'}
           </span>
           of Liquidity on Uniswap
         </div>
@@ -56,7 +56,7 @@ function Information() {
           <img src="market/feature-circle.svg" alt="" />
           <div>
             <p>INSTAR Price</p>
-            <h4>${loadingInstarInfo || !instarInfo ? '' : Number(instarInfo?.coincapResult?.data?.priceUsd ? instarInfo?.coincapResult.data.priceUsd : 0).toFixed(4) ?? '0'}</h4>
+            <h4>${loadingInstarInfo || !instarInfo ? '' : Number(instarInfo?.cryptoResult?.usd_price_current ? instarInfo?.cryptoResult.usd_price_current : 0).toFixed(4) ?? '0'}</h4>
           </div>
         </a>
         <a className="feature">
