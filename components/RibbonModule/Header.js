@@ -11,6 +11,7 @@ function Header({ tab, change }) {
   const [isGtNormalDesktop, setIsGtNormalDesktop] = useState(false)
   const smallLayout = below(920)
   const normalDesktopLayout = !below(1352)
+  const [opened, setOpened] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,6 +47,38 @@ function Header({ tab, change }) {
 
   return (
     <div>
+      <div className="mobile-header">
+        <div className="dropdown-header">
+          <span>
+            <img src={instarLogo} alt="Instar Logotype Icon" width={40} css={`height: 2.5rem;`} />
+            instars.com
+          </span>
+          <button onClick={() => setOpened(!opened)}>
+            {opened &&
+              <img src="close.svg" />
+            }
+            {!opened &&
+              <img src="menu.svg" />
+            }
+          </button>
+        </div>
+        <div className={opened ? 'dropdown-content active' : 'dropdown-content'}>
+          <div className="dropdown-item">
+            <a className={tab === 0 ? 'active' : ''} onClick={() => {change(0); setOpened(false)}}>Buy INSTAR</a>
+          </div>
+          <div className="dropdown-item">
+            <a className={tab === 1 ? 'active' : ''} onClick={() => {change(1); setOpened(false)}}>Liquidity Mining</a>
+          </div>
+          <div className="dropdown-item">
+            <a href="https://instars.com/instartoken">Explore INSTAR</a>
+          </div>
+          <div className="dropdown-item">
+            <ButtonBase onClick={handleConnect}>
+              Connect Wallet
+            </ButtonBase>
+          </div>
+        </div>
+      </div>
       <div className="page-header" css={` background: #FFFFFF; `}>
         <PageBackdrop />
         <div className="container">
