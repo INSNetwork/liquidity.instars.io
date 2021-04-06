@@ -75,3 +75,70 @@ h1 {
     }
   }
 }
+
+.page-header {
+  display: block;
+  @media (max-width: 991px) {
+    display: none;
+  }
+}
+
+.mobile-header {
+  display: none;
+  @media (max-width: 991px) {
+    display: block;
+    position: relative;
+
+    .dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.12);
+
+      span {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        color: #2D376A;
+        display: flex;
+        align-items: center;
+
+        img {
+          margin-right: 0.5rem;
+        }
+      }
+
+      button {
+        border: none;
+        outline: none;
+        background: transparent;
+      }
+    }
+
+    .dropdown-content {
+      position: absolute;
+      background: white;
+      z-index: 1000;
+      display: none;
+      .dropdown-item {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        a {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 19px;
+          color: #2D376A;
+        }
+      }
+
+      &.active {
+        left: 0;
+        right: 0;
+        top: 65px;
+        display: block;
+      }
+    }
+  }
+}
